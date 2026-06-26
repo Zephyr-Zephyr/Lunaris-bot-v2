@@ -1,207 +1,239 @@
 # 🌙 Lunaris Ticket Bot
 
-Ein moderner Discord Bot mit Ticket-, Welcome- und Giveaway-System, gebaut mit discord.js
+A modern Discord bot with ticket, welcome, and giveaway systems, built with discord.js.
 
 ## ✨ Features
 
-- 🎫 **Ticket System** - Benutzer können Support-Tickets erstellen
-- 👋 **Welcome System** - Automatische Willkommensnachrichten für neue Mitglieder
-- 🎉 **Giveaway System** - Einfaches Giveaway-Management
-- 🚀 **Railway Ready** - Optimiert für Deployment auf Railway
-- 📦 **GitHub Integration** - Automatisches Deployment via GitHub Actions
-- 💾 **Datenbank Support** - MongoDB Integration optional verfügbar
+* 🎫 **Ticket System** – Users can create support tickets
+* 👋 **Welcome System** – Automatic welcome messages for new members
+* 🎉 **Giveaway System** – Easy giveaway management
+* 🚀 **Railway Ready** – Optimized for deployment on Railway
+* 📦 **GitHub Integration** – Automatic deployment via GitHub Actions
+* 💾 **Database Support** – Optional MongoDB integration available
 
-## 🚀 Quick Start
+---
 
-### Voraussetzungen
-- Node.js 18+
-- Discord Bot Token
-- GitHub Account (für CI/CD)
-- Railway Account (für Hosting)
+# 🚀 Quick Start
 
-### Installation
+## Requirements
 
-1. **Repository klonen/einrichten:**
+* Node.js 18+
+* Discord Bot Token
+* GitHub Account (for CI/CD)
+* Railway Account (for hosting)
+
+## Installation
+
+### Clone or set up the repository:
+
 ```bash
 cd "d:\New Brave\Lunaris Ticket Bot\New Bot"
 npm install
 ```
 
-2. **.env Datei erstellen:**
+### Create a `.env` file:
+
 ```bash
 cp .env.example .env
 ```
 
-Dann die Werte eintragen:
+Then enter your values:
+
 ```env
-DISCORD_TOKEN=dein_token_hier
-CLIENT_ID=deine_client_id
-GUILD_ID=deine_guild_id (optional)
+DISCORD_TOKEN=your_token_here
+CLIENT_ID=your_client_id
+GUILD_ID=your_guild_id (optional)
 ```
 
-3. **Lokal testen:**
+### Test locally:
+
 ```bash
 npm run dev
 ```
 
-## 📖 Befehle
+---
 
-### Ticket Commands
-```
-/ticket setup <channel> - Richte das Ticket-System ein
-/ticket close - Schließe das aktuelle Ticket
-```
+# 📖 Commands
 
-### Welcome Commands
-```
-/welcome set <channel> <message> - Stelle die Welcome-Nachricht ein
-/welcome test - Teste die Welcome-Nachricht
-```
+## Ticket Commands
 
-### Giveaway Commands
-```
-/giveaway start <prize> <duration> <winners> - Starte ein Giveaway
-```
+* `/ticket setup <channel>` – Set up the ticket system
+* `/ticket close` – Close the current ticket
 
-### Sonstige Commands
-```
-/ping - Zeige Bot-Latenz
-```
+## Welcome Commands
 
-## 🚀 Deployment auf Railway
+* `/welcome set <channel> <message>` – Configure the welcome message
+* `/welcome test` – Test the welcome message
 
-### Schritt 1: Railway Account erstellen
-1. Gehe zu https://railway.app
-2. Melde dich mit GitHub an
-3. Erstelle ein neues Projekt
+## Giveaway Commands
 
-### Schritt 2: GitHub Secret hinzufügen
-1. Gehe zu deinem GitHub Repository
-2. Settings → Secrets and variables → Actions
-3. Neues Secret: `RAILWAY_TOKEN`
-   - Token von Railway Dashboard kopieren
+* `/giveaway start <prize> <duration> <winners>` – Start a giveaway
 
-### Schritt 3: Umgebungsvariablen auf Railway
-1. Im Railway Dashboard: Variables
-2. Alle `.env` Variablen eintragen:
-   - `DISCORD_TOKEN`
-   - `CLIENT_ID`
-   - etc.
+## Other Commands
 
-### Schritt 4: Deployen
+* `/ping` – Display bot latency
+
+---
+
+# 🚀 Deployment on Railway
+
+## Step 1: Create a Railway Account
+
+1. Go to https://railway.app
+2. Sign in with GitHub
+3. Create a new project
+
+## Step 2: Add a GitHub Secret
+
+1. Open your GitHub repository
+2. Go to **Settings → Secrets and variables → Actions**
+3. Create a new secret called: `RAILWAY_TOKEN`
+4. Copy the token from your Railway dashboard
+
+## Step 3: Configure Environment Variables on Railway
+
+In the Railway Dashboard, open **Variables** and add all variables from your `.env` file:
+
+* `DISCORD_TOKEN`
+* `CLIENT_ID`
+* etc.
+
+## Step 4: Deploy
+
 ```bash
 git push main
 ```
-GitHub Actions wird automatisch den Bot deployen!
 
-## 🔗 GitHub Integration
+GitHub Actions will automatically deploy the bot!
 
-### Automatisches Deployment
-Das Repository ist mit GitHub Actions konfiguriert:
+---
 
-- ✅ **Automatisches Deployment** bei Push zu `main` Branch
-- ✅ **Code Quality Checks** vor dem Deployment
-- ✅ **Security Audits** für Dependencies
+# 🔗 GitHub Integration
 
-### Workflows anzeigen
-Gehe zu: Actions → Workflow Runs
+## Automatic Deployment
 
-## 📦 Erweiterung
+The repository is configured with GitHub Actions:
 
-### Neuen Command hinzufügen
+* ✅ Automatic deployment on pushes to the `main` branch
+* ✅ Code quality checks before deployment
+* ✅ Security audits for dependencies
 
-Erstelle eine neue Datei in `src/commands/`:
+### View Workflows
 
-```javascript
+Go to:
+
+**Actions → Workflow Runs**
+
+---
+
+# 📦 Extending the Bot
+
+## Add a New Command
+
+Create a new file in `src/commands/`:
+
+```js
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('meinbefehl')
-    .setDescription('Beschreibung'),
+    .setName('mycommand')
+    .setDescription('Description'),
 
   async execute(interaction) {
-    await interaction.reply('Antwort');
+    await interaction.reply('Response');
   },
 };
 ```
 
-### Neuen Event hinzufügen
+## Add a New Event
 
-Erstelle eine neue Datei in `src/events/`:
+Create a new file in `src/events/`:
 
-```javascript
+```js
 module.exports = {
   name: 'eventName',
-  once: false, // true wenn Event nur einmal aufgerufen wird
+  once: false, // true if the event should only be triggered once
   execute(event, client) {
-    console.log('Event getriggert!');
+    console.log('Event triggered!');
   },
 };
 ```
 
-## 📝 Projektstruktur
+---
 
-```
-├── index.js                 # Hauptdatei
+# 📝 Project Structure
+
+```text
+├── index.js                 # Main file
 ├── package.json             # Dependencies
-├── .env.example             # Umgebungsvariablen Vorlage
-├── Dockerfile              # Docker-Konfiguration
-├── Procfile                # Railway/Heroku Konfiguration
-├── railway.json            # Railway-Spezifikationen
-├── README.md               # Diese Datei
+├── .env.example             # Environment variables template
+├── Dockerfile               # Docker configuration
+├── Procfile                 # Railway/Heroku configuration
+├── railway.json             # Railway specifications
+├── README.md                # This file
 ├── .github/
-│   └── workflows/          # GitHub Actions
-│       ├── deploy.yml      # Auto-Deployment
-│       └── lint.yml        # Code Quality
+│   └── workflows/           # GitHub Actions
+│       ├── deploy.yml       # Auto deployment
+│       └── lint.yml         # Code quality
 └── src/
-    ├── commands/           # Slash Commands
+    ├── commands/           # Slash commands
     │   ├── ping.js
     │   ├── ticket.js
     │   ├── giveaway.js
     │   └── welcome.js
-    ├── events/             # Event Handler
+    ├── events/             # Event handlers
     │   ├── ready.js
     │   ├── interactionCreate.js
     │   └── guildMemberAdd.js
-    ├── models/             # Datenbank Modelle (optional)
-    └── utils/              # Utility Funktionen
+    ├── models/             # Database models (optional)
+    └── utils/              # Utility functions
 ```
-
-## 🐛 Troubleshooting
-
-### Bot erscheint nicht online
-- ✅ DISCORD_TOKEN in .env überprüfen
-- ✅ Bot Permissions prüfen
-- ✅ Intents aktivieren
-
-### Commands werden nicht angezeigt
-- ✅ Bot neu starten
-- ✅ Cache löschen: `npm run dev`
-- ✅ Guild ID überprüfen
-
-### Deployment fehlgeschlagen
-- ✅ RAILWAY_TOKEN Secret überprüfen
-- ✅ GitHub Actions Logs anschauen
-- ✅ Railway Logs prüfen
-
-## 📚 Weitere Ressourcen
-
-- [discord.js Docs](https://discord.js.org)
-- [Discord Developer Portal](https://discord.com/developers)
-- [Railway Docs](https://docs.railway.app)
-- [GitHub Actions Docs](https://docs.github.com/en/actions)
-
-## 📄 Lizenz
-
-MIT License - siehe LICENSE Datei
-
-## 👥 Support
-
-Bei Fragen oder Problemen:
-- GitHub Issues erstellen
-- Discord Support Server
 
 ---
 
-**Gemacht mit ❤️ für Discord Communities**
+# 🐛 Troubleshooting
+
+## Bot Does Not Appear Online
+
+* ✅ Verify `DISCORD_TOKEN` in your `.env`
+* ✅ Check bot permissions
+* ✅ Enable required intents
+
+## Commands Are Not Showing
+
+* ✅ Restart the bot
+* ✅ Clear cache: `npm run dev`
+* ✅ Verify the Guild ID
+
+## Deployment Failed
+
+* ✅ Verify the `RAILWAY_TOKEN` secret
+* ✅ Check GitHub Actions logs
+* ✅ Review Railway logs
+
+---
+
+# 📚 Additional Resources
+
+* discord.js Documentation
+* Discord Developer Portal
+* Railway Documentation
+* GitHub Actions Documentation
+
+---
+
+# 📄 License
+
+MIT License – see the `LICENSE` file for details.
+
+---
+
+# 👥 Support
+
+If you have questions or encounter issues:
+
+* Create a GitHub Issue
+* Join the Discord Support Server
+
+Made with ❤️ for Discord communities.
