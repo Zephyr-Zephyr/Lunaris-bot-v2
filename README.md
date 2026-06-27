@@ -1,4 +1,4 @@
-# 🌙 Lunaris Ticket Bot
+# 🌙 Lunaris Bot
 
 A modern Discord bot with ticket, welcome, and giveaway systems, built with discord.js.
 
