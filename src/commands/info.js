@@ -37,6 +37,7 @@ module.exports = {
     // Get package version
     const packagePath = path.join(__dirname, '../../package.json');
     let version = '1.0.0';
+
     try {
       const pkg = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
       version = pkg.version || '1.0.0';
@@ -44,17 +45,17 @@ module.exports = {
       console.error('Error reading package.json:', err);
     }
 
-    // Calculate uptime
+    // Uptime
     const uptimeMs = Date.now() - botStartTime;
     const uptime = formatUptime(uptimeMs);
 
-    // Get ping
+    // Ping
     const ping = client.ws.ping;
 
-    // Count open tickets
+    // Tickets
     const openTickets = countOpenTickets(guild);
 
-    // Get member count
+    // Members
     const memberCount = guild.memberCount || guild.members.cache.size;
 
     const embed = new EmbedBuilder()
@@ -76,8 +77,8 @@ module.exports = {
   },
 };
 
-// Update bot start time when module is loaded (for restarts)
-if (require.main === module || !global.botStartTime) {
+// Update bot start time
+if (!global.botStartTime) {
   global.botStartTime = Date.now();
   botStartTime = Date.now();
 }
