@@ -1,23 +1,25 @@
+const { registerCommands } = require('../utils/commandRegistrar');
+
 module.exports = {
   name: 'ready',
   once: true,
-  execute(client) {
+  async execute(client) {
     console.log(`✅ Bot ist online als ${client.user.tag}`);
     console.log(`📊 Bot ist auf ${client.guilds.cache.size} Servern aktiv`);
 
-    // Slash Commands registrieren
-    const rawCommands = client.commands && typeof client.commands.values === 'function'
-      ? Array.from(client.commands.values())
-      : client.commands
-        ? Object.values(client.commands)
-        : [];
-    const commands = rawCommands.map(cmd => cmd.data?.toJSON()).filter(Boolean);
+    try {
+      const rawCommands = client.commands && typeof client.commands.values === 'function'
+        ? Array.from(client.commands.values())
+        : client.commands
+          ? Object.values(client.commands)
+          : [];
 
-    client.application.commands.set(commands).catch(error => {
+      const result = await registerCommands(client, rawCommands);
+      console.log(`🧩 Slash-Commands registriert (${result.scope}, ${result.registered} Befehle)`);
+    } catch (error) {
       console.error('Fehler beim Registrieren der Commands:', error);
-    });
+    }
 
-    // Bot Status
     client.user.setActivity('Lunaris Ticket Bot', { type: 'WATCHING' });
   },
 };
