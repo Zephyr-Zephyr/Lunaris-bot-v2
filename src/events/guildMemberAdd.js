@@ -25,13 +25,17 @@ module.exports = {
           ? config.welcomeMessage.replace('{user}', `${member}`)
           : `Welcome to our server, ${member}! Please verify to get access.`
       )
+      .addFields(
+        { name: '📋 Rules', value: 'Read the rules and stay respectful.' },
+        { name: '✅ Verification', value: 'Press the button below to verify.' }
+      )
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
       .setFooter({ text: `User ID: ${member.id}` })
       .setTimestamp();
 
     const verifyButton = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
-        .setCustomId('verify_member')
+        .setCustomId(`verify_member:${config.welcomeVerifyRole || ''}`)
         .setLabel('Verify')
         .setStyle(ButtonStyle.Primary)
     );

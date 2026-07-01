@@ -1,7 +1,8 @@
-const { Client, GatewayIntentBits, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
+const { createApi } = require('./src/utils/api');
 
 const client = new Client({
   intents: [
@@ -41,6 +42,12 @@ for (const file of eventFiles) {
     client.on(event.name, (...args) => event.execute(...args, client));
   }
 }
+
+const api = createApi(client);
+const PORT = process.env.PORT || 3000;
+api.listen(PORT, () => {
+  console.log(`✅ API läuft auf Port ${PORT}`);
+});
 
 // Login
 client.login(process.env.DISCORD_TOKEN);

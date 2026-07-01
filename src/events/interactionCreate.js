@@ -23,12 +23,11 @@ module.exports = {
 
     // Button Interactions
     if (interaction.isButton()) {
-        if (interaction.customId === 'create_ticket') {
-          // legacy: handled by select menu now
-          const replyOpts = { content: 'This ticket menu is legacy; please use the category menu.', flags: 64 };
-          if (interaction.replied || interaction.deferred) await interaction.followUp(replyOpts);
-          else await interaction.reply(replyOpts);
-        }
+      if (interaction.customId === 'create_ticket') {
+        const replyOpts = { content: 'This ticket menu is legacy; please use the category menu.', flags: 64 };
+        if (interaction.replied || interaction.deferred) await interaction.followUp(replyOpts);
+        else await interaction.reply(replyOpts);
+      }
 
       if (interaction.customId === 'confirm_close') {
         await interaction.channel.delete().catch(err => {
@@ -51,22 +50,9 @@ module.exports = {
         await interaction.message.react('✨');
       }
 
-      if (interaction.customId === 'verify_member') {
+      if (interaction.customId.startsWith('verify_member')) {
         try {
-          const configPath = path.join(__dirname, '../../config.json');
-          let config = {};
-          if (fs.existsSync(configPath)) {
-            config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-          }
-
-          const roleId = config.welcomeVerifyRole;
-          if (!roleId) {
-            const replyOpts = { content: '⚠️ Verification role is not configured. Please set it with /welcome set.', flags: 64 };
-            if (interaction.replied || interaction.deferred) await interaction.followUp(replyOpts);
-            else await interaction.reply(replyOpts);
-            return;
-          }
-
+          const roleId = interaction.customId.split(':')[1] || null;
           const guild = interaction.guild;
           let member;
           try {
@@ -87,9 +73,16 @@ module.exports = {
             return;
           }
 
+          if (!roleId) {
+            const replyOpts = { content: '⚠️ No verification role was configured.', flags: 64 };
+            if (interaction.replied || interaction.deferred) await interaction.followUp(replyOpts);
+            else await interaction.reply(replyOpts);
+            return;
+          }
+
           const role = guild.roles.cache.get(roleId);
           if (!role) {
-            const replyOpts = { content: '⚠️ The configured verification role does not exist. Please reconfigure with /welcome set.', flags: 64 };
+            const replyOpts = { content: '⚠️ The configured verification role does not exist.', flags: 64 };
             if (interaction.replied || interaction.deferred) await interaction.followUp(replyOpts);
             else await interaction.reply(replyOpts);
             return;
@@ -119,6 +112,27 @@ module.exports = {
           if (interaction.replied || interaction.deferred) await interaction.followUp(replyOpts);
           else await interaction.reply(replyOpts);
         }
+      }
+
+      if (interaction.customId === 'open_ticket') {
+        const ticketChannel = await interaction.guild.channels.create({
+          name: `ticket-${interaction.user.username}`,
+          type: ChannelType.GuildText,
+          permissionOverwrites: [
+            { id: interaction.guild.id, deny: ['ViewChannel'] },
+            { id: interaction.user.id, allow: ['ViewChannel', 'SendMessages', 'ReadMessageHistory'] },
+          ],
+        });
+
+        const embed = new EmbedBuilder()
+          .setColor('#5865f2')
+          .setTitle('🎫 New support ticket')
+          .setDescription(`Hi ${interaction.user}, your ticket is ready. Describe your issue and a staff member will assist shortly.`);
+
+        await ticketChannel.send({ content: `${interaction.user}`, embeds: [embed] });
+        const replyOpts = { content: `✅ Your ticket channel was created: ${ticketChannel}`, flags: 64 };
+        if (interaction.replied || interaction.deferred) await interaction.followUp(replyOpts);
+        else await interaction.reply(replyOpts);
       }
     }
 
