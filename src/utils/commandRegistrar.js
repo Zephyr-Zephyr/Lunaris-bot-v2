@@ -1,9 +1,15 @@
 const { REST, Routes } = require('discord.js');
 
 function getCommandsPayload(commands) {
+  const seen = new Set();
   return (commands || [])
     .map(command => command.data?.toJSON())
-    .filter(Boolean);
+    .filter(Boolean)
+    .filter(command => {
+      if (!command.name || seen.has(command.name)) return false;
+      seen.add(command.name);
+      return true;
+    });
 }
 
 async function registerCommands(client, commands, env = process.env) {
