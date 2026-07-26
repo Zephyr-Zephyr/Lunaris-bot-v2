@@ -24,6 +24,6 @@ module.exports = {
         { name: '/mod warn|ban|log', value: 'Moderation log and actions' }
       );
 
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], flags: 64 });
   },
 };

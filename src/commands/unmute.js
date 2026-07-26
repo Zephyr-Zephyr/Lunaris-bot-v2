@@ -13,11 +13,11 @@ module.exports = {
     const member = await guild.members.fetch(user.id).catch(() => null);
 
     if (!member) {
-      return interaction.reply({ content: '❌ Could not find this member.', ephemeral: true });
+      return interaction.reply({ content: '❌ Could not find this member.', flags: 64 });
     }
 
     await member.timeout(null);
     const embed = new EmbedBuilder().setColor('#23a559').setTitle('🔊 User unmuted').setDescription(`${user.tag} is no longer muted.`);
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], flags: 64 });
   },
 };

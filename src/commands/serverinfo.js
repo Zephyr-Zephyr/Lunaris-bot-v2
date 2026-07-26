@@ -16,6 +16,6 @@ module.exports = {
         { name: 'Roles', value: `${guild.roles.cache.size}`, inline: true }
       );
 
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], flags: 64 });
   },
 };

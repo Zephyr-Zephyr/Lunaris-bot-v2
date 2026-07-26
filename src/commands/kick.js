@@ -15,11 +15,11 @@ module.exports = {
     const member = await guild.members.fetch(user.id).catch(() => null);
 
     if (!member) {
-      return interaction.reply({ content: '❌ Could not find this member.', ephemeral: true });
+      return interaction.reply({ content: '❌ Could not find this member.', flags: 64 });
     }
 
     await member.kick(reason);
     const embed = new EmbedBuilder().setColor('#da373c').setTitle('👢 User kicked').setDescription(`${user.tag} was kicked.`).addFields({ name: 'Reason', value: reason });
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], flags: 64 });
   },
 };

@@ -19,6 +19,6 @@ module.exports = {
     );
 
     await channel.send({ embeds: [embed], components: [row] });
-    await interaction.reply({ content: `✅ Ticket panel created in ${channel}.`, ephemeral: true });
+    await interaction.reply({ content: `✅ Ticket panel created in ${channel}.`, flags: 64 });
   },
 };

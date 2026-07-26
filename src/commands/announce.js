@@ -15,7 +15,7 @@ module.exports = {
     const message = interaction.options.getString('message');
 
     if (!channel?.isTextBased?.()) {
-      return interaction.reply({ content: '⚠️ Please select a text channel.', ephemeral: true });
+      return interaction.reply({ content: '⚠️ Please select a text channel.', flags: 64 });
     }
 
     const embed = new EmbedBuilder()
@@ -25,6 +25,6 @@ module.exports = {
       .setTimestamp();
 
     await channel.send({ embeds: [embed] });
-    await interaction.reply({ content: `✅ Announcement sent to ${channel}.`, ephemeral: true });
+    await interaction.reply({ content: `✅ Announcement sent to ${channel}.`, flags: 64 });
   },
 };

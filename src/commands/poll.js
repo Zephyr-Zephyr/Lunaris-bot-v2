@@ -12,7 +12,7 @@ module.exports = {
     const options = interaction.options.getString('options').split(',').map(item => item.trim()).filter(Boolean);
 
     if (options.length < 2) {
-      return interaction.reply({ content: '⚠️ Please provide at least 2 options separated by commas.', ephemeral: true });
+      return interaction.reply({ content: '⚠️ Please provide at least 2 options separated by commas.', flags: 64 });
     }
 
     const embed = new EmbedBuilder()

@@ -17,13 +17,13 @@ module.exports = {
     const ms = parseDurationToMs(duration);
 
     if (!ms) {
-      return interaction.reply({ content: '⚠️ Use a valid duration like 10m, 2h or 1d.', ephemeral: true });
+      return interaction.reply({ content: '⚠️ Use a valid duration like 10m, 2h or 1d.', flags: 64 });
     }
 
     const guild = interaction.guild;
     const member = await guild.members.fetch(user.id).catch(() => null);
     if (!member) {
-      return interaction.reply({ content: '❌ Could not find this member.', ephemeral: true });
+      return interaction.reply({ content: '❌ Could not find this member.', flags: 64 });
     }
 
     const timeoutMs = Math.min(ms, 28 * 24 * 60 * 60 * 1000);
@@ -35,6 +35,6 @@ module.exports = {
       .setDescription(`${user.tag} was muted for ${duration}.`)
       .addFields({ name: 'Reason', value: reason });
 
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], flags: 64 });
   },
 };

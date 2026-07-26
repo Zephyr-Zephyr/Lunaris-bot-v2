@@ -57,7 +57,7 @@ module.exports = {
         .addFields({ name: 'Moderator', value: interaction.user.tag }, { name: 'Status', value: entry.active ? 'Active' : 'Revoked' })
         .setTimestamp();
 
-      await interaction.reply({ embeds: [embed], ephemeral: true });
+      await interaction.reply({ embeds: [embed], flags: 64 });
       return;
     }
 
@@ -82,7 +82,7 @@ module.exports = {
         .addFields({ name: 'Moderator', value: interaction.user.tag }, { name: 'Duration', value: duration }, { name: 'Status', value: entry.active ? 'Active' : 'Revoked' })
         .setTimestamp();
 
-      await interaction.reply({ embeds: [embed], ephemeral: true });
+      await interaction.reply({ embeds: [embed], flags: 64 });
       return;
     }
 
@@ -102,7 +102,7 @@ module.exports = {
         embed.addFields({ name: 'Recent entries', value: lines.join('\n') });
       }
 
-      await interaction.reply({ embeds: [embed], ephemeral: true });
+      await interaction.reply({ embeds: [embed], flags: 64 });
     }
   },
 };

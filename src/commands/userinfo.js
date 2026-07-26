@@ -20,6 +20,6 @@ module.exports = {
         { name: 'Joined', value: member?.joinedAt ? member.joinedAt.toLocaleDateString('de-DE') : 'Unknown', inline: true }
       );
 
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], flags: 64 });
   },
 };
