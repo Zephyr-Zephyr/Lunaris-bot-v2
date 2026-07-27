@@ -2,7 +2,7 @@
   "welcomeChannel": "1517239865639571486",
   "welcomeMessage": "\"Welcome {user}! Please verify to get access.\"",
   "welcomeVerifyRole": "1517239911785169087",
-  "announcementChannel": "",
-  "announcementMessage": "",
+  "announcementChannel": "1495544132909797459",
+  "announcementMessage": "Update",
   "announcementIntervalMs": 120000
 }
